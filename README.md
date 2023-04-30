@@ -51,31 +51,31 @@ controlling devices like coolant or tool changer.
     Default: 10000000 nanoseconds (10 milliseconds).
 
 #### PINS
-** \<name\>.gpioa-gp**N**.out**  bit in  
+ **\<name\>.gpioa-gp**N**.out**  bit in  
     MCP23017 GPIOA GP pin N is configured as output
     
-** \<name\>.gpiob-gp**N**.out**  bit in  
+ **\<name\>.gpiob-gp**N**.out**  bit in  
     MCP23017 GPIOB GP pin N is configured as output
     
-** \<name\>.gpioa-gp**N**.in**  bit out  
+ **\<name\>.gpioa-gp**N**.in**  bit out  
     MCP23017 GPIOA GP pin N is configured as input
     
-** \<name\>.gpiob-gp**N**.in**  bit out  
+ **\<name\>.gpiob-gp**N**.in**  bit out  
     MCP23017 GPIOA GP pin N is configured as input
 
-** \<name\>.interrupt**  bit in   
+ **\<name\>.interrupt**  bit in   
     On rising edge from **false** to **true** reads the interrupt registers and GPIO pins from the MCP23017
 
-** \<name\>.intf-a** u32 out  
+ **\<name\>.intf-a** u32 out  
     MCP23017 interrupt flag register INTFA read by the rising edge of pin *interrupt*
 
-** \<name\>.intf-b** u32 out  
+ **\<name\>.intf-b** u32 out  
     MCP23017 interrupt flag register INTFB read by the rising edge of pin *interrupt*
 
-** \<name\>.intcap-a** u32 out  
+ **\<name\>.intcap-a** u32 out  
     MCP23017 interrupt capture register INTCAPA read by the rising edge of pin *interrupt*
 
-** \<name\>.intcap-b** u32 out  
+ **\<name\>.intcap-b** u32 out  
     MCP23017 interrupt capture register INTCAPB read by the rising edge of pin *interrupt*
     
 If the bits of the interrupt registers are needed a bitslice component can be used.
@@ -83,37 +83,37 @@ If the bits of the interrupt registers are needed a bitslice component can be us
 #### PARAMETERS
 Parameters set the MCP23017 configuration registers.
 
-** \<name\>.ipolarity-a** u32 rw  
+ **\<name\>.ipolarity-a** u32 rw  
     MCP23017 input polarity register IPOLA
 
-** \<name\>.ipolarity-b** u32 rw  
+ **\<name\>.ipolarity-b** u32 rw  
     MCP23017 input polarity register IPOLB
 
-** \<name\>.gpintenable-a** u32 rw  
+ **\<name\>.gpintenable-a** u32 rw  
     MCP23017 interrupt-on-change control register GPINTENA
 
-** \<name\>.gpintenable-b** u32 rw  
+ **\<name\>.gpintenable-b** u32 rw  
     MCP23017 interrupt-on-change control register GPINTENB
 
-** \<name\>.defaultvalue-a** u32 rw  
+ **\<name\>.defaultvalue-a** u32 rw  
     MCP23017 default compare register DEFVALA
 
-** \<name\>.defaultvalue-b** u32 rw  
+ **\<name\>.defaultvalue-b** u32 rw  
     MCP23017 default compare register DEFVALB
 
-** \<name\>.intcontrol-a** u32 rw  
+ **\<name\>.intcontrol-a** u32 rw  
     MCP23017 interrupt control register INTCONA
 
-** \<name\>.intcontrol-b** u32 rw  
+ **\<name\>.intcontrol-b** u32 rw  
     MCP23017 interrupt control register INTCONB
 
-** \<name\>.gppullup-a** u32 rw  
+ **\<name\>.gppullup-a** u32 rw  
     MCP23017 pull-up resistor configuration register GPPUA
 
-** \<name\>.gppullup-b** u32 rw  
+ **\<name\>.gppullup-b** u32 rw  
     MCP23017 pull-up resistor configuration register GPPUB
 
-** \<name\>.iocon** u32 rw  
+ **\<name\>.iocon** u32 rw  
     MCP23017 configuration register IOCON  
     The IOCON register bits BANK and SEQOP are controlled by the component as they are 
     important for correct functionality of the component.
