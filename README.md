@@ -78,6 +78,12 @@ controlling devices like coolant or tool changer.
  **\<name\>.intcap-b** u32 out  
     MCP23017 interrupt capture register INTCAPB read by the rising edge of pin *interrupt*
     
+  **\<name\>.gpio-a** u32 out  
+    MCP23017 GPIOA register read by the rising edge of pin *interrupt* or value read after write of a GPIOA GP out pin
+    
+  **\<name\>.gpio-b* u32 out  
+    MCP23017 GPIOB register read by the rising edge of pin *interrupt* or value read after write of a GPIOB GP out pin
+    
 If the bits of the interrupt registers are needed a bitslice component can be used.
 
 #### PARAMETERS

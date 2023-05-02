@@ -392,6 +392,14 @@ int export_io_expander(const char *name, int hal_comp_id, io_expander_data_t *cf
   if (retval != 0)
     return retval;
 
+  retval = hal_pin_u32_newf(HAL_OUT, &(cfg->hal_gpio_a), hal_comp_id, "%s.gpio-a", name);
+  if (retval != 0)
+    return retval;
+
+  retval = hal_pin_u32_newf(HAL_OUT, &(cfg->hal_gpio_b), hal_comp_id, "%s.gpio-b", name);
+  if (retval != 0)
+    return retval;
+
   retval = hal_param_u32_newf(HAL_RW, &(cfg->hal_ipola), hal_comp_id, "%s.ipolarity-a", name);
   if (retval != 0)
     return retval;
@@ -493,6 +501,8 @@ void apply_gpio_bits(io_expander_data_t *cfg, gpioBits a, gpioBits b)
 		}
 		mask <<= 1;
 	}
+	*(cfg->hal_gpio_a) = a.value;
+	(*cfg->hal_gpio_b) = b.value;
 }
 
 void process_gpio_ports(io_expander_data_t *cfg, Mcp23017 *ioexpander)

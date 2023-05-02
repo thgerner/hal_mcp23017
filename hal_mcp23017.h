@@ -29,6 +29,8 @@ typedef struct {
 	hal_u32_t			*hal_intfb;
 	hal_u32_t			*hal_intcapa;
 	hal_u32_t			*hal_intcapb;
+	hal_u32_t			*hal_gpio_a;
+	hal_u32_t			*hal_gpio_b;
 	// parameters
 	uint32_t			hal_ipola;
 	uint32_t			hal_ipolb;
