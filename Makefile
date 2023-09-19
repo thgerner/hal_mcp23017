@@ -43,5 +43,8 @@ hal_mcp23017:	$(OBJS)
 %.o:	$(PROJECT_ROOT)%.c
 	$(CC) -c $(CFLAGS) $(CPPFLAGS) -o $@ $<
 
+install: hal_mcp23017
+	install -m 0755 -o root -g root -t /usr/bin $<
+
 clean:
 	rm -fr hal_mcp23017 $(OBJS) $(EXTRA_CLEAN)
