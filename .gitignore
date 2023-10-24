@@ -1,3 +1,4 @@
 /.settings/
 /**/*.o
 /build/default/hal_mcp23017
+/hal_mcp23017

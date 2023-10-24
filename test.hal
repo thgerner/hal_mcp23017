@@ -1,0 +1,3 @@
+# test the mcp23017
+
+loadusr hal_mcp23017 -debug -iodira 0xaa -iodirb 0xff i2cbus 2 -address 0x20
