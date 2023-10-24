@@ -19,8 +19,10 @@ typedef struct {
 	uint32_t			gppu_a, gppu_b;
 	uint32_t			iocon;
 	// GPIO registers are splotted to bits
-	hal_bit_t 		*hal_gpioa[8];		// GPIOA
-	hal_bit_t 		*hal_gpiob[8];		// GPIOB
+	hal_bit_t 		*hal_gpioa_in[8];		// GPIOA
+	hal_bit_t			*hal_gpioa_out[8];
+	hal_bit_t 		*hal_gpiob_in[8];		// GPIOB
+	hal_bit_t			*hal_gpiob_out[8];
 	hal_bit_t			*hal_interrupt;
 	// the interrupt registers are provided as int value; if the bits are needed
 	// a bitslice component can be used
@@ -29,8 +31,6 @@ typedef struct {
 	hal_u32_t			*hal_intfb;
 	hal_u32_t			*hal_intcapa;
 	hal_u32_t			*hal_intcapb;
-	hal_u32_t			*hal_gpio_a;
-	hal_u32_t			*hal_gpio_b;
 	// parameters
 	uint32_t			hal_ipola;
 	uint32_t			hal_ipolb;

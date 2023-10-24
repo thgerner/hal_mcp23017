@@ -58,10 +58,10 @@ controlling devices like coolant or tool changer.
     MCP23017 GPIOB GP pin N is configured as output
     
  **\<name\>.gpioa-gp**N**.in**  bit out  
-    MCP23017 GPIOA GP pin N is configured as input
+    MCP23017 GPIOA GP pin N input value if configured as input or pin output value if configured as output
     
  **\<name\>.gpiob-gp**N**.in**  bit out  
-    MCP23017 GPIOA GP pin N is configured as input
+    MCP23017 GPIOA GP pin N input value if configured as input or pin output value if configured as output
 
  **\<name\>.interrupt**  bit in   
     On rising edge from **false** to **true** reads the interrupt registers and GPIO pins from the MCP23017
@@ -77,12 +77,6 @@ controlling devices like coolant or tool changer.
 
  **\<name\>.intcap-b** u32 out  
     MCP23017 interrupt capture register INTCAPB read by the rising edge of pin *interrupt*
-    
-  **\<name\>.gpio-a** u32 out  
-    MCP23017 GPIOA register read by the rising edge of pin *interrupt* or value read after write of a GPIOA GP out pin
-    
-  **\<name\>.gpio-b* u32 out  
-    MCP23017 GPIOB register read by the rising edge of pin *interrupt* or value read after write of a GPIOB GP out pin
     
 If the bits of the interrupt registers are needed a bitslice component can be used.
 

@@ -346,12 +346,13 @@ int export_io_expander(const char *name, int hal_comp_id, io_expander_data_t *cf
   // create GPIO bits
   int mask = 1;
   for (int i = 0; i < 8; ++i) {
-  	if ((cfg->iodir_a & mask) == mask) {
-  		DEBUG("Create HAl pin gpioa-gp%d.in as output\n", i);
-  		retval = hal_pin_bit_newf(HAL_OUT, &(cfg->hal_gpioa[i]), hal_comp_id, "%s.gpioa-gp%d.in", name, i);
-  	} else {
+		DEBUG("Create HAl pin gpioa-gp%d.in as output\n", i);
+		retval = hal_pin_bit_newf(HAL_OUT, &(cfg->hal_gpioa_in[i]), hal_comp_id, "%s.gpioa-gp%d.in", name, i);
+  	if (retval != 0)
+  	  return retval;
+  	if ((cfg->iodir_a & mask) == 0) {
   		DEBUG("Create HAl pin gpioa-gp%d.out as input\n", i);
-  		retval = hal_pin_bit_newf(HAL_IN, &(cfg->hal_gpioa[i]), hal_comp_id, "%s.gpioa-gp%d.out", name, i);
+  		retval = hal_pin_bit_newf(HAL_IN, &(cfg->hal_gpioa_out[i]), hal_comp_id, "%s.gpioa-gp%d.out", name, i);
   	}
   	if (retval != 0)
   	  return retval;
@@ -359,12 +360,13 @@ int export_io_expander(const char *name, int hal_comp_id, io_expander_data_t *cf
   }
   mask = 1;
   for (int i = 0; i < 8; ++i) {
-  	if ((cfg->iodir_b & mask) == mask) {
-  		DEBUG("Create HAl pin gpiob-gp%d.in as output\n", i);
-  		retval = hal_pin_bit_newf(HAL_OUT, &(cfg->hal_gpiob[i]), hal_comp_id, "%s.gpiob-gp%d.in", name, i);
-  	} else {
+		DEBUG("Create HAl pin gpiob-gp%d.in as output\n", i);
+		retval = hal_pin_bit_newf(HAL_OUT, &(cfg->hal_gpiob_in[i]), hal_comp_id, "%s.gpiob-gp%d.in", name, i);
+  	if (retval != 0)
+  	  return retval;
+  	if ((cfg->iodir_b & mask) == 0) {
   		DEBUG("Create HAl pin gpiob-gp%d.out as input\n", i);
-  		retval = hal_pin_bit_newf(HAL_IN, &(cfg->hal_gpiob[i]), hal_comp_id, "%s.gpiob-gp%d.out", name, i);
+  		retval = hal_pin_bit_newf(HAL_IN, &(cfg->hal_gpiob_out[i]), hal_comp_id, "%s.gpiob-gp%d.out", name, i);
   	}
   	if (retval != 0)
   	  return retval;
@@ -389,14 +391,6 @@ int export_io_expander(const char *name, int hal_comp_id, io_expander_data_t *cf
     return retval;
 
   retval = hal_pin_u32_newf(HAL_OUT, &(cfg->hal_intcapb), hal_comp_id, "%s.intcap-b", name);
-  if (retval != 0)
-    return retval;
-
-  retval = hal_pin_u32_newf(HAL_OUT, &(cfg->hal_gpio_a), hal_comp_id, "%s.gpio-a", name);
-  if (retval != 0)
-    return retval;
-
-  retval = hal_pin_u32_newf(HAL_OUT, &(cfg->hal_gpio_b), hal_comp_id, "%s.gpio-b", name);
   if (retval != 0)
     return retval;
 
@@ -466,10 +460,10 @@ void process_hal_gpio_inputs(io_expander_data_t *cfg, Mcp23017 *ioexpander)
 	int olata = 0, olatb = 0;
 	int mask = 1;
 	for (int i = 0; i < 8; ++i) {
-		if (((cfg->iodir_a & mask) == 0) && (*(cfg->hal_gpioa[i]) == true)) {
+		if (((cfg->iodir_a & mask) == 0) && (*(cfg->hal_gpioa_out[i]) == true)) {
 			olata |= mask;
 		}
-		if (((cfg->iodir_b & mask) == 0) && (*(cfg->hal_gpiob[i]) == true)) {
+		if (((cfg->iodir_b & mask) == 0) && (*(cfg->hal_gpiob_out[i]) == true)) {
 			olatb |= mask;
 		}
 		mask <<= 1;
@@ -489,20 +483,15 @@ void process_hal_gpio_inputs(io_expander_data_t *cfg, Mcp23017 *ioexpander)
 
 void apply_gpio_bits(io_expander_data_t *cfg, gpioBits a, gpioBits b)
 {
+	bool val;
 	int mask = 1;
 	for (int i = 0; i < 8; ++i) {
-		if ((cfg->iodir_a & mask) == mask) {
-			bool val = (a.value & mask) == mask;
-			*(cfg->hal_gpioa[i]) = val;
-		}
-		if ((cfg->iodir_b & mask) == mask) {
-			bool val = (b.value & mask) == mask;
-			*(cfg->hal_gpiob[i]) = val;
-		}
+		val = (a.value & mask) == mask;
+		*(cfg->hal_gpioa_in[i]) = val;
+		val = (b.value & mask) == mask;
+		*(cfg->hal_gpiob_in[i]) = val;
 		mask <<= 1;
 	}
-	*(cfg->hal_gpio_a) = a.value;
-	(*cfg->hal_gpio_b) = b.value;
 }
 
 void process_gpio_ports(io_expander_data_t *cfg, Mcp23017 *ioexpander)
