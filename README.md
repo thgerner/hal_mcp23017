@@ -64,7 +64,8 @@ controlling devices like coolant or tool changer.
     MCP23017 GPIOA GP pin N input value if configured as input or pin output value if configured as output
 
  **\<name\>.interrupt**  bit in   
-    On rising edge from **false** to **true** reads the interrupt registers and GPIO pins from the MCP23017
+    On **true** reads the interrupt registers and GPIO pins from the MCP23017. Usually this pin is connected to
+    the interrupt output pins of the MCP23017. Reading the GPIO clears the MCP23017 interrupt output pin.
 
  **\<name\>.intf-a** u32 out  
     MCP23017 interrupt flag register INTFA read by the rising edge of pin *interrupt*

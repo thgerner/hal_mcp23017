@@ -26,7 +26,6 @@ typedef struct {
 	hal_bit_t			*hal_interrupt;
 	// the interrupt registers are provided as int value; if the bits are needed
 	// a bitslice component can be used
-	bool          old_interrupt;
 	hal_u32_t			*hal_intfa;
 	hal_u32_t			*hal_intfb;
 	hal_u32_t			*hal_intcapa;

@@ -285,8 +285,8 @@ int main(int argc, char **argv)
   	  process_parameters(config, ioexpander);
 
   	  // handle interrupt pin
-  	  if (!config->old_interrupt && *config->hal_interrupt) {
-  	  	// Rising edge, read interrupt related registers
+  	  if (*config->hal_interrupt) {
+  	  	// interrupt bit set, read interrupt related registers
   	  	Mcp23017::InterruptResult intres = ioexpander->getInterruptResult();
   	  	*(config->hal_intcapa) = intres.capa.value;
   	  	*(config->hal_intcapb) = intres.capb.value;
@@ -295,7 +295,6 @@ int main(int argc, char **argv)
   	  	DEBUG("Interrupt detected, read GPIUA=0x%02x GPIOB=0x%02x\n", intres.gpioa.value, intres.gpiob.value);
   	  	apply_gpio_bits(config, intres.gpioa, intres.gpiob);
   	  }
-  	  config->old_interrupt = *config->hal_interrupt;
 
   	  errorcounter = 0;
     }
@@ -376,7 +375,6 @@ int export_io_expander(const char *name, int hal_comp_id, io_expander_data_t *cf
   retval = hal_pin_bit_newf(HAL_IN, &(cfg->hal_interrupt), hal_comp_id, "%s.interrupt", name);
   if (retval != 0)
     return retval;
-  cfg->old_interrupt = *(cfg->hal_interrupt);
 
   retval = hal_pin_u32_newf(HAL_OUT, &(cfg->hal_intfa), hal_comp_id, "%s.intf-a", name);
   if (retval != 0)
