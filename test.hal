@@ -1,3 +1,18 @@
-# test the mcp23017
+# test of the mcp23017
 
-loadusr hal_mcp23017 -debug -iodira 0xaa -iodirb 0xff i2cbus 2 -address 0x20
+loadrt threads name1=servo period1=1000000
+loadrt hal_bb_gpio input_pins=911
+
+loadusr -Wn ioexpander hal_mcp23017 -debug -name ioexpander -iodira 0xaa -i2cbus 2 -address 0x20
+
+addf bb_gpio.read servo
+
+setp ioexpander.gpintenable-a 0xaa
+setp ioexpander.intcontrol-a 0
+setp ioexpander.gppullup-a 0xaa
+setp ioexpander.iocon 0x42
+
+# connect interrupt pin
+net mcp_int bb_gpio.p9.in-11 => ioexpander.interrupt
+
+start
