@@ -1,4 +1,4 @@
-#### NAMR
+#### NAME
 hal_mcp23017 - Userspace HAL component to connect a MCP23017 port expander
 
 #### SYNOPSIS
