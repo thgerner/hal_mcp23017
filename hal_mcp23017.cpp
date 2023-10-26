@@ -1,6 +1,6 @@
 
 /*
- * curtain_control.cpp
+ * hal_mcp23017.cpp
  *
  *  Created on: 27.04.2023
  *      Author: thomas
