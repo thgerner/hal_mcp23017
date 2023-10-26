@@ -48,7 +48,7 @@ int verbose;
 
 // prototypes
 int export_io_expander(const char *name, int hal_comp_id, io_expander_data_t *config);
-void process_hal_gpio_inputs(io_expander_data_t *config, Mcp23017 *ioexpander);
+bool process_hal_gpio_inputs(io_expander_data_t *config, Mcp23017 *ioexpander);
 void apply_gpio_bits(io_expander_data_t *cfg, gpioBits a, gpioBits b);
 void process_gpio_ports(io_expander_data_t *config, Mcp23017 *ioexpander);
 void process_parameters(io_expander_data_t *config, Mcp23017 *ioexpander);
@@ -275,13 +275,15 @@ int main(int argc, char **argv)
 
   DEBUG("Enter main loop.\n");
   int errorcounter = 0;
+  long period = interval;
+  long fastCount = 0;
   while (!done)
   {
   	int result;
   	// process data
   	try {
   		// check for GPIO inputs
-  		process_hal_gpio_inputs(config, ioexpander);
+  		bool inputChanged = process_hal_gpio_inputs(config, ioexpander);
   	  process_parameters(config, ioexpander);
 
   	  // handle interrupt pin
@@ -297,6 +299,12 @@ int main(int argc, char **argv)
   	  }
 
   	  errorcounter = 0;
+
+  	  // in case we changed inputs scan pins for a limited time in a millisecond period
+  	  if (inputChanged) {
+  	  	period = 1000000;	// 1 millisecond
+  	  	fastCount = 0;
+  	  }
     }
     catch (IOException *e)
     {
@@ -309,8 +317,14 @@ int main(int argc, char **argv)
     	delete e;
     }
 
+    // millisecond interval for one second
+    if (++fastCount > 1000) {
+    	fastCount = 0;
+    	period = interval;
+    }
+
   	// sleep till next run
-  	schedule.tv_nsec += interval;
+  	schedule.tv_nsec += period;
   	if(schedule.tv_nsec > 999999999) {
   		schedule.tv_nsec -= 1000000000;
   		schedule.tv_sec ++;
@@ -452,7 +466,7 @@ int export_io_expander(const char *name, int hal_comp_id, io_expander_data_t *cf
   return 0;
 }
 
-void process_hal_gpio_inputs(io_expander_data_t *cfg, Mcp23017 *ioexpander)
+bool process_hal_gpio_inputs(io_expander_data_t *cfg, Mcp23017 *ioexpander)
 {
 	// check for changed hal_gpio values and update teh MCP23017
 	int olata = 0, olatb = 0;
@@ -467,6 +481,7 @@ void process_hal_gpio_inputs(io_expander_data_t *cfg, Mcp23017 *ioexpander)
 		mask <<= 1;
 	}
 
+	bool ret = false;
 	if (olata != cfg->olat_a || olatb != cfg->olat_b) {
 		Mcp23017::OutputLatch olat;
 		olat.a.value = olata & 0xff;
@@ -476,7 +491,9 @@ void process_hal_gpio_inputs(io_expander_data_t *cfg, Mcp23017 *ioexpander)
 		cfg->olat_b = olatb;
 		DEBUG("SET OLATA=0x%02x OLATB=0x%02x\n", olata, olatb);
 		process_gpio_ports(cfg, ioexpander);
+		ret = true;
 	}
+	return ret;
 }
 
 void apply_gpio_bits(io_expander_data_t *cfg, gpioBits a, gpioBits b)
