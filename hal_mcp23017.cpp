@@ -331,7 +331,7 @@ int main(int argc, char **argv)
   	}
   	result = clock_nanosleep(CLOCK_MONOTONIC, TIMER_ABSTIME, &schedule, NULL);
   	if (result != 0 && result != EINTR) {
-  		ERROR("clock_nonosleep() failed with error %d\n", result);
+  		ERROR("clock_nanosleep() failed with error %d\n", result);
   		done = 1;
   	}
   }
