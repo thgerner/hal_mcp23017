@@ -10,7 +10,7 @@ port expander by i2c bus. It can set output pins and read input pins and can con
 all aspects of the chip like interrupt creation by the interrupt on change feature 
 of the chip.
 
-The inputs and output of the chip are configured by the ** -iodira ** and ** -iodirb **
+The inputs and output of the chip are configured by the **-iodira** and **-iodirb**
 options and are reflected by corresponding HAL pins in the component. A output pin of the 
 chip is created as input pin in the component with a name ending to ```.out ``` and a input pin
 of the chip is created as output pin in the component with a name ending to ```.in ```
@@ -51,16 +51,16 @@ controlling devices like coolant or tool changer.
     Default: 10000000 nanoseconds (10 milliseconds).
 
 #### PINS
- **\<name\>.gpioa-gp**N**.out**  bit in  
+ **\<name\>.gpioa-gp** N **.out**  bit in  
     MCP23017 GPIOA GP pin N is configured as output
     
- **\<name\>.gpiob-gp**N**.out**  bit in  
+ **\<name\>.gpiob-gp** N **.out**  bit in  
     MCP23017 GPIOB GP pin N is configured as output
     
- **\<name\>.gpioa-gp**N**.in**  bit out  
+ **\<name\>.gpioa-gp** N **.in**  bit out  
     MCP23017 GPIOA GP pin N input value if configured as input or pin output value if configured as output
     
- **\<name\>.gpiob-gp**N**.in**  bit out  
+ **\<name\>.gpiob-gp** N **.in**  bit out  
     MCP23017 GPIOA GP pin N input value if configured as input or pin output value if configured as output
 
  **\<name\>.interrupt**  bit in   
@@ -120,9 +120,12 @@ Parameters set the MCP23017 configuration registers.
     important for correct functionality of the component.
 
 #### USGAE
-loadusr -W hal_mcp23017 -i2cbus 1 -address 0x20 -iodira 0xaa -name ioexpander
+Look for a MCP23017 on I2C bus 1 at I2C address 0x20 and configure register IODIRA with 0xaa, name the component *ioexpander* 
 
-    Look for a MCP23017 on I2C bus 1 at I2C address 0x20 and configure register IODIRA with 0xaa, name the component *ioexpander* 
+```
+loadusr -W hal_mcp23017 -i2cbus 1 -address 0x20 -iodira 0xaa -name ioexpander
+```
+
 
 #### AUTHOR
 Written by Thomas Gerner
