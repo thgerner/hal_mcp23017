@@ -360,12 +360,12 @@ int export_io_expander(const char *name, int hal_comp_id, io_expander_data_t *cf
   int mask = 1;
   for (int i = 0; i < 8; ++i) {
 		DEBUG("Create HAl pin gpioa-gp%d.in as output\n", i);
-		retval = hal_pin_bit_newf(HAL_OUT, &(cfg->hal_gpioa_in[i]), hal_comp_id, "%s.gpioa-gp%d.in", name, i); //@suppress("Invalid arguments")
+		retval = hal_pin_bit_newf(HAL_OUT, &(cfg->hal_gpioa_in[i]), hal_comp_id, "%s.port-a.gp%d-in", name, i); //@suppress("Invalid arguments")
   	if (retval != 0)
   	  return retval;
   	if ((cfg->iodir_a & mask) == 0) {
   		DEBUG("Create HAl pin gpioa-gp%d.out as input\n", i);
-  		retval = hal_pin_bit_newf(HAL_IN, &(cfg->hal_gpioa_out[i]), hal_comp_id, "%s.gpioa-gp%d.out", name, i); //@suppress("Invalid arguments")
+  		retval = hal_pin_bit_newf(HAL_IN, &(cfg->hal_gpioa_out[i]), hal_comp_id, "%s.port-a.gp%d-out", name, i); //@suppress("Invalid arguments")
   	}
   	if (retval != 0)
   	  return retval;
@@ -374,12 +374,12 @@ int export_io_expander(const char *name, int hal_comp_id, io_expander_data_t *cf
   mask = 1;
   for (int i = 0; i < 8; ++i) {
 		DEBUG("Create HAl pin gpiob-gp%d.in as output\n", i);
-		retval = hal_pin_bit_newf(HAL_OUT, &(cfg->hal_gpiob_in[i]), hal_comp_id, "%s.gpiob-gp%d.in", name, i); //@suppress("Invalid arguments")
+		retval = hal_pin_bit_newf(HAL_OUT, &(cfg->hal_gpiob_in[i]), hal_comp_id, "%s.port-b.gp%d-in", name, i); //@suppress("Invalid arguments")
   	if (retval != 0)
   	  return retval;
   	if ((cfg->iodir_b & mask) == 0) {
   		DEBUG("Create HAl pin gpiob-gp%d.out as input\n", i);
-  		retval = hal_pin_bit_newf(HAL_IN, &(cfg->hal_gpiob_out[i]), hal_comp_id, "%s.gpiob-gp%d.out", name, i); //@suppress("Invalid arguments")
+  		retval = hal_pin_bit_newf(HAL_IN, &(cfg->hal_gpiob_out[i]), hal_comp_id, "%s.port-b.gp%d-out", name, i); //@suppress("Invalid arguments")
   	}
   	if (retval != 0)
   	  return retval;
@@ -390,68 +390,68 @@ int export_io_expander(const char *name, int hal_comp_id, io_expander_data_t *cf
   if (retval != 0)
     return retval;
 
-  retval = hal_pin_u32_newf(HAL_OUT, &(cfg->hal_intfa), hal_comp_id, "%s.intf-a", name); //@suppress("Invalid arguments")
+  retval = hal_pin_u32_newf(HAL_OUT, &(cfg->hal_intfa), hal_comp_id, "%s.port-a.intf", name); //@suppress("Invalid arguments")
   if (retval != 0)
     return retval;
 
-  retval = hal_pin_u32_newf(HAL_OUT, &(cfg->hal_intfb), hal_comp_id, "%s.intf-b", name); //@suppress("Invalid arguments")
+  retval = hal_pin_u32_newf(HAL_OUT, &(cfg->hal_intfb), hal_comp_id, "%s.port-b.intf", name); //@suppress("Invalid arguments")
   if (retval != 0)
     return retval;
 
-  retval = hal_pin_u32_newf(HAL_OUT, &(cfg->hal_intcapa), hal_comp_id, "%s.intcap-a", name); //@suppress("Invalid arguments")
+  retval = hal_pin_u32_newf(HAL_OUT, &(cfg->hal_intcapa), hal_comp_id, "%s.port-a.intcap", name); //@suppress("Invalid arguments")
   if (retval != 0)
     return retval;
 
-  retval = hal_pin_u32_newf(HAL_OUT, &(cfg->hal_intcapb), hal_comp_id, "%s.intcap-b", name); //@suppress("Invalid arguments")
+  retval = hal_pin_u32_newf(HAL_OUT, &(cfg->hal_intcapb), hal_comp_id, "%s.port-b.intcap", name); //@suppress("Invalid arguments")
   if (retval != 0)
     return retval;
 
-  retval = hal_param_u32_newf(HAL_RW, &(cfg->hal_ipola), hal_comp_id, "%s.ipolarity-a", name);
+  retval = hal_param_u32_newf(HAL_RW, &(cfg->hal_ipola), hal_comp_id, "%s.port-a.ipolarity", name);
   if (retval != 0)
     return retval;
   cfg->hal_ipola = cfg->ipol_a;
 
-  retval = hal_param_u32_newf(HAL_RW, &(cfg->hal_ipolb), hal_comp_id, "%s.ipolarity-b", name);
+  retval = hal_param_u32_newf(HAL_RW, &(cfg->hal_ipolb), hal_comp_id, "%s.port-b.ipolarity", name);
   if (retval != 0)
     return retval;
   cfg->hal_ipolb = cfg->ipol_b;
 
-  retval = hal_param_u32_newf(HAL_RW, &(cfg->hal_gpintena), hal_comp_id, "%s.gpintenable-a", name);
+  retval = hal_param_u32_newf(HAL_RW, &(cfg->hal_gpintena), hal_comp_id, "%s.port-a.gpintenable", name);
   if (retval != 0)
     return retval;
   cfg->hal_gpintena = cfg->gpinten_a;
 
-  retval = hal_param_u32_newf(HAL_RW, &(cfg->hal_gpintenb), hal_comp_id, "%s.gpintenable-b", name);
+  retval = hal_param_u32_newf(HAL_RW, &(cfg->hal_gpintenb), hal_comp_id, "%s.port-b.gpintenable", name);
   if (retval != 0)
     return retval;
   cfg->hal_gpintenb = cfg->gpinten_b;
 
-  retval = hal_param_u32_newf(HAL_RW, &(cfg->hal_defvala), hal_comp_id, "%s.defaultvalue-a", name);
+  retval = hal_param_u32_newf(HAL_RW, &(cfg->hal_defvala), hal_comp_id, "%s.port-a.defaultvalue", name);
   if (retval != 0)
     return retval;
   cfg->hal_defvala = cfg->defval_a;
 
-  retval = hal_param_u32_newf(HAL_RW, &(cfg->hal_defvalb), hal_comp_id, "%s.defaultvalue-b", name);
+  retval = hal_param_u32_newf(HAL_RW, &(cfg->hal_defvalb), hal_comp_id, "%s.port-b.defaultvalue", name);
   if (retval != 0)
     return retval;
   cfg->hal_defvalb = cfg->defval_b;
 
-  retval = hal_param_u32_newf(HAL_RW, &(cfg->hal_intcona), hal_comp_id, "%s.intcontrol-a", name);
+  retval = hal_param_u32_newf(HAL_RW, &(cfg->hal_intcona), hal_comp_id, "%s.port-a.intcontrol", name);
   if (retval != 0)
     return retval;
   cfg->hal_intcona = cfg->intcon_a;
 
-  retval = hal_param_u32_newf(HAL_RW, &(cfg->hal_intconb), hal_comp_id, "%s.intcontrol-b", name);
+  retval = hal_param_u32_newf(HAL_RW, &(cfg->hal_intconb), hal_comp_id, "%s.port-b.intcontrol", name);
   if (retval != 0)
     return retval;
   cfg->hal_intconb = cfg->intcon_b;
 
-  retval = hal_param_u32_newf(HAL_RW, &(cfg->hal_gppua), hal_comp_id, "%s.gppullup-a", name);
+  retval = hal_param_u32_newf(HAL_RW, &(cfg->hal_gppua), hal_comp_id, "%s.port-a.gppullup", name);
   if (retval != 0)
     return retval;
   cfg->hal_gppua = cfg->gppu_a;
 
-  retval = hal_param_u32_newf(HAL_RW, &(cfg->hal_gppub), hal_comp_id, "%s.gppullup-b", name);
+  retval = hal_param_u32_newf(HAL_RW, &(cfg->hal_gppub), hal_comp_id, "%s.port-b.gppullup", name);
   if (retval != 0)
     return retval;
   cfg->hal_gppub = cfg->gppu_b;
