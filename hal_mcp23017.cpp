@@ -185,7 +185,7 @@ int main(int argc, char **argv)
 		}
 	}
 
-  VERBOSE("Initialize HAL\n");
+  VERBOSE("Initialize %s HAL\n", modname);
   /* create HAL component */
   int hal_comp_id = hal_init(modname);
   if (hal_comp_id < 0)
@@ -317,8 +317,8 @@ int main(int argc, char **argv)
     	delete e;
     }
 
-    // millisecond interval for one second
-    if (++fastCount > 1000) {
+    // millisecond interval for one hundred milliseconds
+    if (++fastCount > 100) {
     	fastCount = 0;
     	period = interval;
     }
